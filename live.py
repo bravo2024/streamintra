@@ -28,7 +28,7 @@ def apply_prophet(df, periods):
     model = Prophet()
     print(df.columns)
 
-    df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+    df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
     
     st.write((df.columns))
