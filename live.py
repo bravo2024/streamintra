@@ -25,7 +25,7 @@ def update_stock_prices(ticker_symbol, interval):
             historical_prices = stock.history(period='1d', interval=interval)
             # Extract latest price and time
             latest_price = historical_prices['Close'].iloc[-1]
-            latest_time = historical_prices.index[-1].strftime('%H:%M:%S')
+            latest_time = historical_prices.index[-1].strftime("%m/%d/%Y, %H:%M:%S")
             # Update plot
             ax.clear()
             ax.plot(historical_prices.index, historical_prices['Close'], label='Stock Price')
