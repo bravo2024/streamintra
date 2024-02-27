@@ -66,7 +66,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
             # Fetch historical data
             historical_data = fetch_historical_data(ticker_symbol, interval)
 
-        
+        st.write(df.tail(10))
         # Fetch historical data
         #historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
