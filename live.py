@@ -44,7 +44,7 @@ def apply_prophet(df, periods):
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
         
-         historical_data = fetch_historical_data(ticker_symbol, interval)
+        historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
         forecast = apply_prophet(historical_data, periods)
         # Plot results
