@@ -24,7 +24,7 @@ def fetch_historical_data(ticker_symbol, interval):
     return stock.history(period='5d', interval=interval)
 
 # Function to train Prophet model and make predictions
-def apply_prophet(df, periods):
+def apply_prophet(df, periods,interval):
     model = Prophet()
     #print(df.columns)
     #df['Datetime'] = df['Datetime'].dt.tz_localize(None)
@@ -34,9 +34,16 @@ def apply_prophet(df, periods):
     df['ds'] = df['ds'].dt.tz_localize(None)
     #st.write((df.columns))
     #st.write(df.tail(10))
-
+    
     model.fit(df)
-    future = model.make_future_dataframe(periods=periods)
+    if interval.endswith('m'):  # If interval is in minutes
+        freq = str(int(interval[:-1])) + 'T'  # Convert to minutes
+    elif interval.endswith('h'):  # If interval is in hours
+        freq = str(int(interval[:-1])) + 'H'  # Convert to hours
+    else:  # For other intervals (e.g., days, weeks)
+        freq = interval
+    
+    future = model.make_future_dataframe(periods=periods, freq=freq)  # Specify frequency
     forecast = model.predict(future)
     return forecast
 
