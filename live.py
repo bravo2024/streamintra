@@ -37,7 +37,7 @@ def apply_prophet(df, periods):
 # Function to update stock prices with Prophet predictions
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
-        try:
+        
             # Fetch historical data
             historical_data = fetch_historical_data(ticker_symbol, interval)
             # Apply Prophet
@@ -55,5 +55,5 @@ def update_stock_prices(ticker_symbol, interval, periods):
             st.write("Last 10 rows of the data:")
             st.write(df.tail(10))
            
-    if ticker_symbol:
-            update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
+if ticker_symbol:
+   update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
