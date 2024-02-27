@@ -23,6 +23,14 @@ def fetch_historical_data(ticker_symbol, interval):
     stock = yf.Ticker(ticker_symbol)
     return stock.history(period='5d', interval=interval)
 
+
+# Function to fetch intraday data for the selected interval
+def fetch_intraday_data(ticker_symbol, interval):
+    stock = yf.Ticker(ticker_symbol)
+    # Adjust the period to '1d' and interval to the selected interval
+    return stock.history(period='1d', interval=interval)
+
+
 # Function to train Prophet model and make predictions
 def apply_prophet(df, periods,interval):
     model = Prophet()
