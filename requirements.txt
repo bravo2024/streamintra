@@ -1,5 +1,5 @@
 streamlit
 jugaad-data
 pandas
-fbprophet
+prophet
 matplotlib
