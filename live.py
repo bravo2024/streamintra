@@ -37,22 +37,11 @@ def apply_prophet(df, periods,interval):
     st.write(df.tail(10))
     #print(df.columns)
     #df['Datetime'] = df['Datetime'].dt.tz_localize(None)
-    if 'DATE' in df.columns:
-        df = df.rename(columns={'DATE': 'ds', 'Close': 'y'})
-    elif 'DATETIME' in df.columns:
-        df = df.rename(columns={'DATETIME': 'ds', 'Close': 'y'})
-    
-    # Check if 'ds' column exists
-    if 'ds' not in df.columns:
-        raise ValueError("Column 'ds' not found in the DataFrame.")
-    
-    # Convert 'ds' column to datetime if it's not already
-    if not pd.api.types.is_datetime64_any_dtype(df['ds']):
-        df['ds'] = pd.to_datetime(df['ds'])
+    df = df.rename(columns={df.columns[0]: 'ds'})
 
     #df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
-    #df['ds'] = df['ds'].dt.tz_localize(None)
+    df['ds'] = df['ds'].dt.tz_localize(None)
     #st.write((df.columns))
     st.write(df.tail(10))
     
