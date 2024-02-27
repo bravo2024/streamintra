@@ -37,8 +37,9 @@ def apply_prophet(df, periods,interval):
     st.write(df.tail(10))
     #print(df.columns)
     #df['Datetime'] = df['Datetime'].dt.tz_localize(None)
+    df = df.reset_index().rename(columns={'DATE': 'ds', 'DATETIME': 'ds', 'Close': 'y'})
 
-    df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+    #df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
     df['ds'] = df['ds'].dt.tz_localize(None)
     #st.write((df.columns))
