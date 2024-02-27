@@ -44,22 +44,25 @@ def apply_prophet(df, periods):
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
         
-            # Fetch historical data
-            historical_data = fetch_historical_data(ticker_symbol, interval)
-            # Apply Prophet
-            forecast = apply_prophet(historical_data, periods)
-            # Plot results
-            ax.clear()
-            ax.plot(forecast['ds'], forecast['yhat'], label='Predicted Price', color='red')
-            ax.legend(loc='upper left')
-            ax.tick_params(axis='x', rotation=45)
-            ax.autoscale()
-            # Show plot in Streamlit app
-            st.pyplot(fig)
-            # Wait for 1 minute before fetching new data
-            time.sleep(60)
-            #st.write("Last 10 rows of the data:")
-            #st.write(df.tail(10))
+         historical_data = fetch_historical_data(ticker_symbol, interval)
+        # Apply Prophet
+        forecast = apply_prophet(historical_data, periods)
+        # Plot results
+        ax.clear()
+        ax.plot(historical_data.index, historical_data['Close'], label='Original Price', color='blue')
+        ax.plot(forecast['ds'], forecast['yhat'], label='Predicted Price', color='red')
+        ax.legend(loc='upper left')
+        ax.tick_params(axis='x', rotation=45)
+        
+        # Dynamic y-axis limits based on original and predicted prices
+        min_price = min(historical_data['Close'].min(), forecast['yhat'].min())
+        max_price = max(historical_data['Close'].max(), forecast['yhat'].max())
+        ax.set_ylim(min_price * 0.95, max_price * 1.05)  # Adjust margins for better visualization
+        
+        # Show plot in Streamlit app
+        st.pyplot(fig)
+        # Wait for 1 minute before fetching new data
+        time.sleep(60)
            
 if ticker_symbol:
    update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
