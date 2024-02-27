@@ -86,7 +86,10 @@ def update_stock_prices(ticker_symbol, interval, periods):
         #ax.xaxis.set_major_locator(plt.MaxNLocator(nbins=10))
         # Format x-axis labels with date and time
         #ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
-        
+         # Set x-axis limits based on the combined range of actual and predicted data
+        min_time = min(historical_data.index.min(), forecast['ds'].min())
+        max_time = max(historical_data.index.max(), forecast['ds'].max())
+        ax.set_xlim(min_time, max_time)
         # Show plot in Streamlit app
         st.pyplot(fig)
         # Wait for 1 minute before fetching new data
