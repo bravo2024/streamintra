@@ -53,7 +53,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
         
         historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
-        forecast = apply_prophet(historical_data, periods)
+        forecast = apply_prophet(historical_data, periods,interval)
         # Plot results
         ax.clear()
         ax.plot(historical_data.index, historical_data['Close'], label='Original Price', color='blue')
