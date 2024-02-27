@@ -38,14 +38,17 @@ def apply_prophet(df, periods,interval):
     #print(df.columns)
     #df['Datetime'] = df['Datetime'].dt.tz_localize(None)
     if 'DATE' in df.columns:
-        df = df.reset_index().rename(columns={'DATE': 'ds', 'Close': 'y'})
+        df = df.rename(columns={'DATE': 'ds', 'Close': 'y'})
     elif 'DATETIME' in df.columns:
-        df = df.reset_index().rename(columns={'DATETIME': 'ds', 'Close': 'y'})
-    #else:
-        #raise ValueError("Either 'DATE' or 'DATETIME' column must be present in the DataFrame.")
-    df['ds'] = pd.to_datetime(df['ds'])  # Convert 'ds' column to datetime if it's not already
-    #model.fit(df)
-    st.write(df.tail(10))
+        df = df.rename(columns={'DATETIME': 'ds', 'Close': 'y'})
+    
+    # Check if 'ds' column exists
+    if 'ds' not in df.columns:
+        raise ValueError("Column 'ds' not found in the DataFrame.")
+    
+    # Convert 'ds' column to datetime if it's not already
+    if not pd.api.types.is_datetime64_any_dtype(df['ds']):
+        df['ds'] = pd.to_datetime(df['ds'])
 
     #df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
