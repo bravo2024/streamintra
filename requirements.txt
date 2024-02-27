@@ -1,0 +1,5 @@
+streamlit
+jugaad-data
+pandas
+fbprophet
+matplotlib
