@@ -26,9 +26,13 @@ def fetch_historical_data(ticker_symbol, interval):
 # Function to train Prophet model and make predictions
 def apply_prophet(df, periods):
     model = Prophet()
+    print(df.columns)
+
     df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
     df['ds'] = df['ds'].dt.tz_localize(None)
+    print(df.columns)
+
     model.fit(df)
     future = model.make_future_dataframe(periods=periods)
     forecast = model.predict(future)
