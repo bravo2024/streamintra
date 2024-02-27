@@ -72,7 +72,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
         # Fetch historical data
         #historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
-       historical_data.index = historical_data.index.tz_localize(None)
+        historical_data.index = historical_data.index.tz_localize(None)
         
         # Apply Prophet
         forecast = apply_prophet(historical_data, periods, interval)
