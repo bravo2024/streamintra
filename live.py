@@ -52,6 +52,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
     while True:
         
       
+  
         # Fetch historical data
         historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
@@ -61,16 +62,6 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.plot(historical_data.index, historical_data['Close'], label='Original Price', color='blue')
         ax.plot(forecast['ds'], forecast['yhat'], label='Predicted Price', color='red')
         ax.legend(loc='upper left')
-        ax.tick_params(axis='x', rotation=45)
-        # Format x-axis date labels
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
-        # Set x-axis major locator
-        ax.xaxis.set_major_locator(mdates.HourLocator(interval=2))  # Adjust interval as needed
-        plt.gcf().autofmt_xdate()  # Auto-format x-axis date labels
-        # Dynamic y-axis limits based on original and predicted prices
-        min_price = min(historical_data['Close'].min(), forecast['yhat'].min())
-        max_price = max(historical_data['Close'].max(), forecast['yhat'].max())
-        ax.set_ylim(min_price * 0.95, max_price * 1.05)  # Adjust margins for better visualization
         # Show plot in Streamlit app
         st.pyplot(fig)
         # Wait for 1 minute before fetching new data
