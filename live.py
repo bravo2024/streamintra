@@ -58,8 +58,8 @@ def update_stock_prices(ticker_symbol, interval, periods):
             st.pyplot(fig)
             # Wait for 1 minute before fetching new data
             time.sleep(60)
-            st.write("Last 10 rows of the data:")
-            st.write(df.tail(10))
+            #st.write("Last 10 rows of the data:")
+            #st.write(df.tail(10))
            
 if ticker_symbol:
    update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
