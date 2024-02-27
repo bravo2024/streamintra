@@ -7,7 +7,7 @@ import time
 # Set up Streamlit layout
 st.title('Real-Time Stock Price Analysis')
 ticker_symbol = st.text_input('Enter Stock Symbol (e.g., AAPL for Apple):')
-interval_options = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1wk', '1mo']
+interval_options = [1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo]
 selected_interval = st.selectbox('Select Time Interval:', interval_options, index=3)
 
 # Initialize plot
