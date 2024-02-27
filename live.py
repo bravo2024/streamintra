@@ -67,7 +67,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.autoscale(enable=True, axis='both', tight=True)  # Autoscale both axes
         
         # Format x-axis labels with date and time
-        ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
+        #ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
         
         # Show plot in Streamlit app
         st.pyplot(fig)
