@@ -49,7 +49,6 @@ def apply_prophet(df, periods,interval):
 
 # Function to update stock prices with Prophet predictions
 # Function to update stock prices with Prophet predictions
-# Function to update stock prices with Prophet predictions
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
         # Fetch historical data
@@ -64,13 +63,17 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.set_xlabel('Time')
         ax.set_ylabel('Stock Price')
         ax.set_title('Real-Time Stock Price')
-        ax.xaxis.set_major_formatter(lambda x, pos: pd.to_datetime(x).strftime('%Y-%m-%d %H:%M:%S'))  # Format date and time
         ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for better readability
         ax.autoscale(enable=True, axis='both', tight=True)  # Autoscale both axes
+        
+        # Format x-axis labels with date and time
+        ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
+        
         # Show plot in Streamlit app
         st.pyplot(fig)
         # Wait for 1 minute before fetching new data
         time.sleep(60)
+
 
 
            
