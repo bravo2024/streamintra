@@ -1,6 +1,6 @@
 import streamlit as st
 import yfinance as yf
-from prophet import Prophet
+from fbprophet import Prophet
 import matplotlib.pyplot as plt
 import pandas as pd
 import time
@@ -27,6 +27,8 @@ def fetch_historical_data(ticker_symbol, interval):
 def apply_prophet(df, periods):
     model = Prophet()
     df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+    # Remove timezone from 'ds' column
+    df['ds'] = df['ds'].dt.tz_localize(None)
     model.fit(df)
     future = model.make_future_dataframe(periods=periods)
     forecast = model.predict(future)
