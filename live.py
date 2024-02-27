@@ -51,8 +51,16 @@ def apply_prophet(df, periods,interval):
 # Function to update stock prices with Prophet predictions
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
+        if interval.endswith('m'):  # Check if interval is intraday
+            # Fetch intraday data
+            historical_data = fetch_intraday_data(ticker_symbol, interval)
+        else:
+            # Fetch historical data
+            historical_data = fetch_historical_data(ticker_symbol, interval)
+
+        
         # Fetch historical data
-        historical_data = fetch_historical_data(ticker_symbol, interval)
+        #historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
         forecast = apply_prophet(historical_data, periods, interval)
         # Plot results
