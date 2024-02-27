@@ -41,8 +41,8 @@ def apply_prophet(df, periods,interval):
         df = df.rename(columns={'DATE': 'ds', 'Close': 'y'})
     elif 'DATETIME' in df.columns:
         df = df.rename(columns={'DATETIME': 'ds', 'Close': 'y'})
-    else:
-        raise ValueError("Either 'DATE' or 'DATETIME' column must be present in the DataFrame.")
+    #else:
+        #raise ValueError("Either 'DATE' or 'DATETIME' column must be present in the DataFrame.")
     
 
     #df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
