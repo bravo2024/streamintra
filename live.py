@@ -54,9 +54,6 @@ def update_stock_prices(ticker_symbol, interval, periods):
             time.sleep(60)
             st.write("Last 10 rows of the data:")
             st.write(df.tail(10))
-            #except Exception as e:
-            #st.error(f"An error occurred: {e}")
-
-# Start fetching and updating stock prices if a valid ticker symbol is provided
+           
 if ticker_symbol:
     update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
