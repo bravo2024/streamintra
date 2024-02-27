@@ -48,11 +48,9 @@ def apply_prophet(df, periods,interval):
     return forecast
 
 # Function to update stock prices with Prophet predictions
+# Function to update stock prices with Prophet predictions
 def update_stock_prices(ticker_symbol, interval, periods):
     while True:
-        
-      
-  
         # Fetch historical data
         historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
@@ -62,10 +60,15 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.plot(historical_data.index, historical_data['Close'], label='Original Price', color='blue')
         ax.plot(forecast['ds'], forecast['yhat'], label='Predicted Price', color='red')
         ax.legend(loc='upper left')
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Stock Price')
+        ax.set_title('Real-Time Stock Price')
+        ax.autoscale()
         # Show plot in Streamlit app
         st.pyplot(fig)
         # Wait for 1 minute before fetching new data
         time.sleep(60)
+
            
 if ticker_symbol:
    update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
