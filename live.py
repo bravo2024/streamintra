@@ -55,5 +55,5 @@ def update_stock_prices(ticker_symbol, interval, periods):
             st.write("Last 10 rows of the data:")
             st.write(df.tail(10))
            
-if ticker_symbol:
-    update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
+    if ticker_symbol:
+            update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
