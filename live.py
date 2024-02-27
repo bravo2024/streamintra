@@ -1,5 +1,6 @@
 import streamlit as st
 import yfinance as yf
+from prophet import Prophet
 import matplotlib.pyplot as plt
 import pandas as pd
 import time
@@ -9,6 +10,7 @@ st.title('Real-Time Stock Price Analysis')
 ticker_symbol = st.text_input('Enter Stock Symbol (e.g., AAPL for Apple):')
 interval_options = ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo']
 selected_interval = st.selectbox('Select Time Interval:', interval_options, index=3)
+forecast_periods = st.slider('Select Number of Future Values to Forecast', min_value=1, max_value=50, value=5)
 
 # Initialize plot
 fig, ax = plt.subplots()
@@ -16,26 +18,36 @@ ax.set_xlabel('Time')
 ax.set_ylabel('Stock Price')
 ax.set_title('Real-Time Stock Price')
 
-# Function to fetch and update stock prices
-def update_stock_prices(ticker_symbol, interval):
+# Function to fetch historical data for the selected interval
+def fetch_historical_data(ticker_symbol, interval):
     stock = yf.Ticker(ticker_symbol)
+    return stock.history(period='5d', interval=interval)
+
+# Function to train Prophet model and make predictions
+def apply_prophet(df, periods):
+    model = Prophet()
+    df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
+    model.fit(df)
+    future = model.make_future_dataframe(periods=periods)
+    forecast = model.predict(future)
+    return forecast
+
+# Function to update stock prices with Prophet predictions
+def update_stock_prices(ticker_symbol, interval, periods):
     while True:
         try:
-            # Get historical prices with selected interval
-            historical_prices = stock.history(period='1d', interval=interval)
-            # Extract latest price and time
-            latest_price = historical_prices['Close'].iloc[-1]
-            latest_time = historical_prices.index[-1].strftime("%m/%d/%Y, %H:%M:%S")
-            # Update plot
+            # Fetch historical data
+            historical_data = fetch_historical_data(ticker_symbol, interval)
+            # Apply Prophet
+            forecast = apply_prophet(historical_data, periods)
+            # Plot results
             ax.clear()
-            ax.plot(historical_prices.index, historical_prices['Close'], label='Stock Price')
+            ax.plot(forecast['ds'], forecast['yhat'], label='Predicted Price', color='red')
             ax.legend(loc='upper left')
             ax.tick_params(axis='x', rotation=45)
             ax.autoscale()
             # Show plot in Streamlit app
             st.pyplot(fig)
-            # Display latest price
-            st.write(f"Latest Price ({latest_time}): {latest_price}")
             # Wait for 1 minute before fetching new data
             time.sleep(60)
         except Exception as e:
@@ -43,4 +55,4 @@ def update_stock_prices(ticker_symbol, interval):
 
 # Start fetching and updating stock prices if a valid ticker symbol is provided
 if ticker_symbol:
-    update_stock_prices(ticker_symbol, selected_interval)
+    update_stock_prices(ticker_symbol, selected_interval, forecast_periods)
