@@ -1,11 +1,14 @@
 import streamlit as st
 import yfinance as yf
 import matplotlib.pyplot as plt
+import pandas as pd
 import time
 
 # Set up Streamlit layout
 st.title('Real-Time Stock Price Analysis')
 ticker_symbol = st.text_input('Enter Stock Symbol (e.g., AAPL for Apple):')
+interval_options = ['1m', '5m', '15m', '30m', '1h', '2h', '4h', '1d', '1wk', '1mo']
+selected_interval = st.selectbox('Select Time Interval:', interval_options, index=3)
 
 # Initialize plot
 fig, ax = plt.subplots()
@@ -14,12 +17,12 @@ ax.set_ylabel('Stock Price')
 ax.set_title('Real-Time Stock Price')
 
 # Function to fetch and update stock prices
-def update_stock_prices(ticker_symbol):
+def update_stock_prices(ticker_symbol, interval):
     stock = yf.Ticker(ticker_symbol)
     while True:
         try:
-            # Get historical prices for the last trading day with 1-minute interval
-            historical_prices = stock.history(period='1d', interval='1m')
+            # Get historical prices with selected interval
+            historical_prices = stock.history(period='1d', interval=interval)
             # Extract latest price and time
             latest_price = historical_prices['Close'].iloc[-1]
             latest_time = historical_prices.index[-1].strftime('%H:%M:%S')
@@ -39,4 +42,4 @@ def update_stock_prices(ticker_symbol):
 
 # Start fetching and updating stock prices if a valid ticker symbol is provided
 if ticker_symbol:
-    update_stock_prices(ticker_symbol)
+    update_stock_prices(ticker_symbol, selected_interval)
