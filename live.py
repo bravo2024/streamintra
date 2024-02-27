@@ -43,6 +43,8 @@ def apply_prophet(df, periods,interval):
         df = df.reset_index().rename(columns={'DATETIME': 'ds', 'Close': 'y'})
     #else:
         #raise ValueError("Either 'DATE' or 'DATETIME' column must be present in the DataFrame.")
+    df['ds'] = pd.to_datetime(df['ds'])  # Convert 'ds' column to datetime if it's not already
+    #model.fit(df)
     
 
     #df = df.reset_index().rename(columns={'Datetime': 'ds', 'Close': 'y'})
