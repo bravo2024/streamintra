@@ -102,10 +102,10 @@ def update_stock_prices(ticker_symbol, interval, periods):
         
         # Print actual and forecasted values in a single table
         col1, col2 = st.columns(2)
-            with col1:
+        with col1:
                 st.write("### Actual Data")
                 st.write(historical_data)
-            with col2:
+        with col2:
                 st.write("### Forecast Data")
                 st.write(forecast)
         time.sleep(60)
