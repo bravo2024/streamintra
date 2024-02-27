@@ -32,6 +32,7 @@ def apply_prophet(df, periods):
     # Remove timezone from 'ds' column
     
     st.write((df.columns))
+    st.write(df.tail(10))
 
     model.fit(df)
     future = model.make_future_dataframe(periods=periods)
