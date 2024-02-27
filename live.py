@@ -30,7 +30,7 @@ def apply_prophet(df, periods):
 
     df = df.reset_index().rename(columns={'Date': 'ds', 'Close': 'y'})
     # Remove timezone from 'ds' column
-    df['ds'] = df['ds'].dt.tz_localize(None)
+    
     print(df.columns)
 
     model.fit(df)
