@@ -41,7 +41,7 @@ def apply_prophet(df, periods,interval):
     # Remove timezone from 'ds' column
     df['ds'] = df['ds'].dt.tz_localize(None)
     #st.write((df.columns))
-    #st.write(df.tail(10))
+    st.write(df.tail(10))
     
     model.fit(df)
     if interval.endswith('m'):  # If interval is in minutes
