@@ -83,7 +83,7 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.set_title('Real-Time Stock Price')
         ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for better readability
         ax.autoscale(enable=True, axis='both', tight=True)  # Autoscale both axes
-        ax.xaxis.set_major_locator(plt.MaxNLocator(nbins=10))
+        #ax.xaxis.set_major_locator(plt.MaxNLocator(nbins=10))
         # Format x-axis labels with date and time
         #ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
         
