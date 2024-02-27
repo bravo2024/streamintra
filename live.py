@@ -99,9 +99,9 @@ def update_stock_prices(ticker_symbol, interval, periods):
         # Show plot in Streamlit app
         st.pyplot(fig)
         st.write("Actual Prices:")
-        st.write(historical_data['Close'])
-        st.write("Predicted Prices:")
-        st.write(forecast['yhat'])
+        st.write(historical_data['Close'],forecast['yhat'])
+        #st.write("Predicted Prices:")
+        #st.write()
         # Wait for 1 minute before fetching new data
         time.sleep(60)
 
