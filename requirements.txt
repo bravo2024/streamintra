@@ -1,5 +1,5 @@
 streamlit
-jugaad-data
+yfinance
 pandas
 prophet
 matplotlib
