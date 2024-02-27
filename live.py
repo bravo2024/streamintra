@@ -72,7 +72,14 @@ def update_stock_prices(ticker_symbol, interval, periods):
         # Fetch historical data
         #historical_data = fetch_historical_data(ticker_symbol, interval)
         # Apply Prophet
+       historical_data.index = historical_data.index.tz_localize(None)
+        
+        # Apply Prophet
         forecast = apply_prophet(historical_data, periods, interval)
+        
+        # Ensure timezone consistency for 'ds' column in forecast DataFrame
+        forecast['ds'] = forecast['ds'].dt.tz_localize(None)
+        
         # Plot results
         ax.clear()
         ax.plot(historical_data.index, historical_data['Close'], label='Original Price', color='blue')
@@ -83,15 +90,15 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.set_title('Real-Time Stock Price')
         ax.tick_params(axis='x', rotation=45)  # Rotate x-axis labels for better readability
         ax.autoscale(enable=True, axis='both', tight=True)  # Autoscale both axes
-        #ax.xaxis.set_major_locator(plt.MaxNLocator(nbins=10))
-        # Format x-axis labels with date and time
-        #ax.set_xticklabels([pd.Timestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in ax.get_xticks()])
-         # Set x-axis limits based on the combined range of actual and predicted data
+        
+        # Set x-axis limits based on the combined range of actual and predicted data
         min_time = min(historical_data.index.min(), forecast['ds'].min())
         max_time = max(historical_data.index.max(), forecast['ds'].max())
         ax.set_xlim(min_time, max_time)
+        
         # Show plot in Streamlit app
         st.pyplot(fig)
+        
         # Wait for 1 minute before fetching new data
         time.sleep(60)
 
