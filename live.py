@@ -31,6 +31,7 @@ def update_stock_prices(ticker_symbol, interval):
             ax.plot(historical_prices.index, historical_prices['Close'], label='Stock Price')
             ax.legend(loc='upper left')
             ax.tick_params(axis='x', rotation=45)
+            ax.autoscale()
             # Show plot in Streamlit app
             st.pyplot(fig)
             # Display latest price
