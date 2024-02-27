@@ -98,12 +98,16 @@ def update_stock_prices(ticker_symbol, interval, periods):
         
         # Show plot in Streamlit app
         st.pyplot(fig)
-        combined_data = pd.concat([historical_data['Close'], forecast['yhat']], axis=1)
-        combined_data.columns = ['Actual Price', 'Predicted Price']
+      
         
         # Print actual and forecasted values in a single table
-        st.write("Combined Data with Actual and Forecasted Prices:")
-        st.write(combined_data)
+        col1, col2 = st.columns(2)
+            with col1:
+                st.write("### Actual Data")
+                st.write(historical_data)
+            with col2:
+                st.write("### Forecast Data")
+                st.write(forecast)
         time.sleep(60)
 
 
