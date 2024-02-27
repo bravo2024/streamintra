@@ -92,9 +92,9 @@ def update_stock_prices(ticker_symbol, interval, periods):
         ax.autoscale(enable=True, axis='both', tight=True)  # Autoscale both axes
         
         # Set x-axis limits based on the combined range of actual and predicted data
-        min_time = min(historical_data.index.min(), forecast['ds'].min())
-        max_time = max(historical_data.index.max(), forecast['ds'].max())
-        ax.set_xlim(min_time, max_time)
+        #min_time = min(historical_data.index.min(), forecast['ds'].min())
+        #max_time = max(historical_data.index.max(), forecast['ds'].max())
+        #ax.set_xlim(min_time, max_time)
         
         # Show plot in Streamlit app
         st.pyplot(fig)
